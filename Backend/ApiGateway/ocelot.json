@@ -1,0 +1,75 @@
+﻿{
+  "Routes": [
+    {
+      "UpstreamPathTemplate": "/api/PMAPI",
+      "UpstreamHttpMethod": [ "Get" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ProductMangemantAPI",
+          "Port": 95
+        }
+      ],
+      "DownstreamPathTemplate": "/api/ProductManagement.API",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Administrator,User"
+      },
+      "RateLimitOptions": {
+        "EnableRateLimiting": true,
+        "Period": "60ms",
+        "PeriodTimespan": 2,
+        "Limit": 1
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/PMAPI/{productId}",
+      "UpstreamHttpMethod": [ "Get","Post", "Put" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "ProductMangemantAPI",
+          "Port": 95
+        }
+      ],
+      "DownstreamPathTemplate": "/api/ProductManagement.API/{productID}",
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "Bearer",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Administrator"
+      },
+      "RateLimitOptions": {
+        "ClientWhitelist": [],
+        "EnableRateLimiting": true,
+        "Period": "60ms",
+        "PeriodTimespan": 2,
+        "Limit": 1
+      }
+    },
+    {
+      "UpstreamPathTemplate": "/api/Account",
+      "UpstreamHttpMethod": [ "Post" ],
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "authenticationwebapi",
+          "Port": 80
+        }
+      ],
+      "DownstreamPathTemplate": "/api/AuthenticationProductManagement.API"
+    }
+  ],
+  "GlobalConfiguration": {
+    "Baseurl": "http://localhost:8585",
+    "RateLimitOptions": {
+      "QuotaExceededMessage": "Too Many Request not allowed",
+      "HttpStatusCode": 909
+    }
+  }
+
+}
